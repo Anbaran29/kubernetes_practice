@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-postgres
+  namespace: mrblack
+  labels:
+    app.kubernetes.io/name: nginx-postgres
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  - name: postgres
+    image: postgres:15.17-trixie
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    env:
+      - name: POSTGRES_PASSWORD
+        value: sify123
+    envFrom:
+      - configMapRef:
+          name: myapp-cm
